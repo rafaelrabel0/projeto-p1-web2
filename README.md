@@ -62,6 +62,10 @@ node-api/
 ├── src/
 │   ├── controllers/
 │   │   └── login.ts        # rotas (Router do Express)
+│   ├── entity/
+│   │   ├── situations.ts    # entidade da tabela situations
+│   │   └── users.ts         # entidade da tabela users
+│   ├── migration/           # migrations do TypeORM
 │   ├── data-source.ts      # conexão do TypeORM com o MySQL
 │   └── index.ts            # inicialização do Express e das rotas
 ├── .env                    # variáveis de ambiente (não versionado)
@@ -89,7 +93,7 @@ Arquitetura MVC: **model** gerencia os registros do banco, **controller** concen
 ## Roteiro das aulas
 
 - [x] Aula 01 — Configurando a API (Express, TypeScript, TypeORM, variáveis de ambiente)
-- [ ] Aula 02 — Migrations (parte 1)
+- [x] Aula 02 — Migrations (parte 1): entities `situations` e `users`, relacionamento 1:N
 - [ ] Aula 03 — Migrations (parte 2)
 - [ ] Aula 04 — CRUD: POST
 - [ ] Aula 05 — CRUD: GET (List & View)
