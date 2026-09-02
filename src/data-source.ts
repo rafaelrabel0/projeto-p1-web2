@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 
+// importar variaveis de ambiente
 dotenv.config();
 
 // dialeto (linguagem) do banco de dados usado pelo TypeORM
@@ -20,7 +21,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: false,
   logging: true,
-  entities: [],
-  migrations: [],
+  entities: [__dirname + "/entity/*.js"],
+  migrations: [__dirname + "/migration/*.js"],
   subscribers: [],
 });

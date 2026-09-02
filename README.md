@@ -65,7 +65,7 @@ node-api/
 │   ├── entity/
 │   │   ├── situations.ts    # entidade da tabela situations
 │   │   └── users.ts         # entidade da tabela users
-│   ├── migration/           # migrations do TypeORM
+│   ├── migration/            # migrations do TypeORM (versionamento do banco)
 │   ├── data-source.ts      # conexão do TypeORM com o MySQL
 │   └── index.ts            # inicialização do Express e das rotas
 ├── .env                    # variáveis de ambiente (não versionado)
@@ -75,6 +75,26 @@ node-api/
 ```
 
 Arquitetura MVC: **model** gerencia os registros do banco, **controller** concentra a regra de negócio e as rotas.
+
+## Migrations
+
+```bash
+# criar um arquivo de migration vazio
+npx typeorm migration:create src/migration/NomeDaMigration
+
+# aplicar as migrations pendentes (rode npm run build antes)
+npx typeorm migration:run -d dist/data-source.js
+
+# desfazer a ultima migration
+npx typeorm migration:revert -d dist/data-source.js
+```
+
+Migrations existentes:
+
+| Ordem | Migration | Cria |
+|-------|-----------|------|
+| 1 | `CreateTableSituations` | tabela `situations` |
+| 2 | `CreateTableUsers` | tabela `users` + FK `situationId` → `situations.id` (`ON DELETE CASCADE`) |
 
 ## Variáveis de ambiente
 
@@ -94,7 +114,7 @@ Arquitetura MVC: **model** gerencia os registros do banco, **controller** concen
 
 - [x] Aula 01 — Configurando a API (Express, TypeScript, TypeORM, variáveis de ambiente)
 - [x] Aula 02 — Migrations (parte 1): entities `situations` e `users`, relacionamento 1:N
-- [ ] Aula 03 — Migrations (parte 2)
+- [x] Aula 03 — Migrations (parte 2): migrations de `situations` e `users` + chave estrangeira
 - [ ] Aula 04 — CRUD: POST
 - [ ] Aula 05 — CRUD: GET (List & View)
 - [ ] Aula 06 — CRUD: PUT
