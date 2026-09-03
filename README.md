@@ -61,7 +61,8 @@ Servidor padrão: <http://localhost:8080>
 node-api/
 ├── src/
 │   ├── controllers/
-│   │   └── login.ts        # rotas (Router do Express)
+│   │   ├── AuthController.ts        # rota raiz (login)
+│   │   └── SituationsController.ts  # rotas de situations
 │   ├── entity/
 │   │   ├── situations.ts    # entidade da tabela situations
 │   │   └── users.ts         # entidade da tabela users
@@ -75,6 +76,22 @@ node-api/
 ```
 
 Arquitetura MVC: **model** gerencia os registros do banco, **controller** concentra a regra de negócio e as rotas.
+
+## Rotas
+
+| Metodo | Rota | Descricao |
+|--------|------|-----------|
+| GET | `/` | tela de login |
+| GET | `/situations` | tela de situacoes |
+| POST | `/situations` | cadastra uma situacao |
+
+Exemplo de cadastro:
+
+```bash
+curl -X POST http://localhost:8080/situations \n  -H "Content-Type: application/json" \n  -d '{"nameSituation":"Ativo"}'
+```
+
+Respostas: `201` com a situacao criada, `500` em caso de erro (ex.: `nameSituation` repetido, que e unico).
 
 ## Migrations
 
@@ -115,7 +132,7 @@ Migrations existentes:
 - [x] Aula 01 — Configurando a API (Express, TypeScript, TypeORM, variáveis de ambiente)
 - [x] Aula 02 — Migrations (parte 1): entities `situations` e `users`, relacionamento 1:N
 - [x] Aula 03 — Migrations (parte 2): migrations de `situations` e `users` + chave estrangeira
-- [ ] Aula 04 — CRUD: POST
+- [x] Aula 04 — CRUD: POST — cadastro de situacoes
 - [ ] Aula 05 — CRUD: GET (List & View)
 - [ ] Aula 06 — CRUD: PUT
 - [ ] Aula 07 — CRUD: DELETE

@@ -5,6 +5,10 @@ import dotenv from "dotenv";
 // importar variaveis de ambiente
 dotenv.config();
 
+// importar as entidades
+import { Users } from "./entity/users";
+import { Situations } from "./entity/situations";
+
 // dialeto (linguagem) do banco de dados usado pelo TypeORM
 const dialect = (process.env.DB_DIALECT || "mysql") as
   | "mysql"
@@ -21,7 +25,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: false,
   logging: true,
-  entities: [__dirname + "/entity/*.js"],
+  entities: [Users, Situations],
   migrations: [__dirname + "/migration/*.js"],
   subscribers: [],
 });
