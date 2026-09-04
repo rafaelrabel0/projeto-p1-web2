@@ -88,4 +88,51 @@ router.post("/situations", async (request: Request, response: Response) => {
   }
 });
 
+// editar situacao
+router.put(
+  "/situations/:id",
+  async (request: Request<{ id: string }>, response: Response) => {
+    try {
+      // obter o id da situacao
+      const { id } = request.params;
+
+      // receber os dados enviados no corpo da requisicao
+      var data = request.body;
+
+      // obter o repositorio da entidade
+      const situationRepository = AppDataSource.getRepository(Situations);
+
+      // buscar a situacao pelo id
+      const situation = await situationRepository.findOneBy({
+        id: parseInt(id),
+      });
+
+      // situacao nao encontrada
+      if (!situation) {
+        response.status(404).json({
+          message: "Situacao nao encontrada!",
+        });
+        return;
+      }
+
+      // atualizar os dados da situacao
+      situationRepository.merge(situation, data);
+
+      // salvar as alteracoes no banco de dados
+      const updateSituation = await situationRepository.save(situation);
+
+      response.status(200).json({
+        message: "Situacao atualizada com sucesso!",
+        situation: updateSituation,
+      });
+      return;
+    } catch (error) {
+      response.status(500).json({
+        message: "Erro ao atualizar a situacao!",
+      });
+      return;
+    }
+  }
+);
+
 export default router;
