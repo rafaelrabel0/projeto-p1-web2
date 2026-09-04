@@ -86,6 +86,7 @@ Arquitetura MVC: **model** gerencia os registros do banco, **controller** concen
 | GET | `/situations/:id` | visualiza uma situacao pelo id (404 se nao existir) |
 | POST | `/situations` | cadastra uma situacao |
 | PUT | `/situations/:id` | edita uma situacao pelo id (404 se nao existir) |
+| DELETE | `/situations/:id` | remove uma situacao pelo id (404 se nao existir) |
 
 Exemplo de cadastro:
 
@@ -137,7 +138,7 @@ Migrations existentes:
 - [x] Aula 04 — CRUD: POST — cadastro de situacoes
 - [x] Aula 05 — CRUD: GET (List & View) — listagem e visualizacao por id
 - [x] Aula 06 — CRUD: PUT — edicao de situacao por id
-- [ ] Aula 07 — CRUD: DELETE
+- [x] Aula 07 — CRUD: DELETE — remocao de situacao por id
 - [ ] Aula 08 — Seeds
 - [ ] Aula 09 — Pagination
 - [ ] Aula 10 — Pagination Service

@@ -135,4 +135,44 @@ router.put(
   }
 );
 
+// apagar situacao
+router.delete(
+  "/situations/:id",
+  async (request: Request<{ id: string }>, response: Response) => {
+    try {
+      // obter o id da situacao
+      const { id } = request.params;
+
+      // obter o repositorio da entidade
+      const situationRepository = AppDataSource.getRepository(Situations);
+
+      // buscar a situacao pelo id
+      const situation = await situationRepository.findOneBy({
+        id: parseInt(id),
+      });
+
+      // situacao nao encontrada
+      if (!situation) {
+        response.status(404).json({
+          message: "Situacao nao encontrada!",
+        });
+        return;
+      }
+
+      // remover o item cadastrado no banco de dados
+      await situationRepository.remove(situation);
+
+      response.status(200).json({
+        message: "Situacao removida com sucesso!",
+      });
+      return;
+    } catch (error) {
+      response.status(500).json({
+        message: "Erro ao remover a situacao!",
+      });
+      return;
+    }
+  }
+);
+
 export default router;
