@@ -6,9 +6,59 @@ import { Situations } from "../entity/situations";
 
 const router = Router();
 
-router.get("/situations", (request: Request, response: Response) => {
-  response.send("Tela de situacoes da rota.");
+// listar as situacoes
+router.get("/situations", async (request: Request, response: Response) => {
+  try {
+    // obter o repositorio da entidade
+    const situationRepository = AppDataSource.getRepository(Situations);
+
+    // recuperar todas as situacoes do banco de dados
+    const situations = await situationRepository.find();
+
+    response.status(200).json(situations);
+    return;
+  } catch (error) {
+    response.status(500).json({
+      message: "Erro ao listar as situacoes!",
+    });
+    return;
+  }
 });
+
+// visualizar uma situacao cadastrada
+router.get(
+  "/situations/:id",
+  async (request: Request<{ id: string }>, response: Response) => {
+    try {
+      // obter o id da situacao
+      const { id } = request.params;
+
+      // obter o repositorio da entidade
+      const situationRepository = AppDataSource.getRepository(Situations);
+
+      // buscar a situacao pelo id
+      const situation = await situationRepository.findOneBy({
+        id: parseInt(id),
+      });
+
+      // situacao nao encontrada
+      if (!situation) {
+        response.status(404).json({
+          message: "Situacao nao encontrada!",
+        });
+        return;
+      }
+
+      response.status(200).json(situation);
+      return;
+    } catch (error) {
+      response.status(500).json({
+        message: "Erro ao visualizar a situacao!",
+      });
+      return;
+    }
+  }
+);
 
 // cadastrar situacao
 router.post("/situations", async (request: Request, response: Response) => {
@@ -29,10 +79,12 @@ router.post("/situations", async (request: Request, response: Response) => {
       message: "Situacao cadastrada com sucesso!",
       situation: newSituation,
     });
+    return;
   } catch (error) {
     response.status(500).json({
       message: "Erro ao cadastrar a situacao!",
     });
+    return;
   }
 });
 

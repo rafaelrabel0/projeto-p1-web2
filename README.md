@@ -82,7 +82,8 @@ Arquitetura MVC: **model** gerencia os registros do banco, **controller** concen
 | Metodo | Rota | Descricao |
 |--------|------|-----------|
 | GET | `/` | tela de login |
-| GET | `/situations` | tela de situacoes |
+| GET | `/situations` | lista todas as situacoes |
+| GET | `/situations/:id` | visualiza uma situacao pelo id (404 se nao existir) |
 | POST | `/situations` | cadastra uma situacao |
 
 Exemplo de cadastro:
@@ -133,7 +134,7 @@ Migrations existentes:
 - [x] Aula 02 — Migrations (parte 1): entities `situations` e `users`, relacionamento 1:N
 - [x] Aula 03 — Migrations (parte 2): migrations de `situations` e `users` + chave estrangeira
 - [x] Aula 04 — CRUD: POST — cadastro de situacoes
-- [ ] Aula 05 — CRUD: GET (List & View)
+- [x] Aula 05 — CRUD: GET (List & View) — listagem e visualizacao por id
 - [ ] Aula 06 — CRUD: PUT
 - [ ] Aula 07 — CRUD: DELETE
 - [ ] Aula 08 — Seeds
