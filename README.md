@@ -50,6 +50,7 @@ mysqld --install MySQL --defaults-file="C:\Users\<usuario>\scoop\apps\mysql\curr
 | `npm start` | Executa o servidor a partir de `dist/index.js` |
 | `npm run watch` | Compilador em modo observador |
 | `npm run start:watch` | Compila e reinicia o servidor a cada alteração (desenvolvimento) |
+| `npm run seed` | Popula o banco com os dados padrão (`node dist/run-seeds.js`) |
 
 Servidor padrão: <http://localhost:8080>
 
@@ -67,6 +68,9 @@ node-api/
 │   │   ├── situations.ts    # entidade da tabela situations
 │   │   └── users.ts         # entidade da tabela users
 │   ├── migration/            # migrations do TypeORM (versionamento do banco)
+│   ├── seeds/
+│   │   └── CreateSituationsSeeds.ts  # dados padrao de situations
+│   ├── run-seeds.ts          # executa todos os seeds
 │   ├── data-source.ts      # conexão do TypeORM com o MySQL
 │   └── index.ts            # inicialização do Express e das rotas
 ├── .env                    # variáveis de ambiente (não versionado)
@@ -76,6 +80,19 @@ node-api/
 ```
 
 Arquitetura MVC: **model** gerencia os registros do banco, **controller** concentra a regra de negócio e as rotas.
+
+## Seeds
+
+Depois de rodar as migrations, popule o banco com os dados padrao:
+
+```bash
+npm run build
+npm run seed
+```
+
+Cadastra as situacoes `Ativo`, `Inativo` e `Pendente`. O seed verifica a quantidade de registros antes de inserir: se a tabela ja tiver dados, nada e feito.
+
+Para criar um novo seed: adicione a classe em `src/seeds/` e instancie no `src/run-seeds.ts`.
 
 ## Rotas
 
@@ -139,7 +156,7 @@ Migrations existentes:
 - [x] Aula 05 — CRUD: GET (List & View) — listagem e visualizacao por id
 - [x] Aula 06 — CRUD: PUT — edicao de situacao por id
 - [x] Aula 07 — CRUD: DELETE — remocao de situacao por id
-- [ ] Aula 08 — Seeds
+- [x] Aula 08 — Seeds — dados padrao da tabela situations
 - [ ] Aula 09 — Pagination
 - [ ] Aula 10 — Pagination Service
 
